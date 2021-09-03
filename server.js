@@ -4,6 +4,7 @@ const layouts = require('express-ejs-layouts');
 const app = express();
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('./config/ppConfig');
 
 const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
@@ -20,7 +21,10 @@ app.use(session({
   saveUninitialized: true    // If we have a new session, we save it, therefore making that true
 }));
 
-app.use(flash());            // flash middleware
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   console.log(res.locals);
